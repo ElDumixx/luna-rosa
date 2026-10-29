@@ -1,0 +1,8 @@
+name = "luna-rosa-assistant"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Secrets (never in this file):
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put APP_TOKEN      (optional shared token the app sends as x-app-token)
