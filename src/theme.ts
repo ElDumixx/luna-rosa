@@ -90,17 +90,18 @@ export const webGlass = Platform.OS === "web";
 export const glass = (c: Palette, level: 1 | 2 | 3 = 1, strong = false): ViewStyle => {
   const dark = c.scheme === "dark";
   return {
-    backgroundColor: dark ? `rgba(44,26,37,${strong ? 0.6 : 0.42})` : `rgba(255,255,255,${strong ? 0.6 : 0.42})`,
-    backgroundImage: `linear-gradient(170deg, rgba(255,255,255,${dark ? 0.08 : 0.45}), rgba(255,255,255,0) 45%)`,
+    // very see-through: the blur behind keeps text readable
+    backgroundColor: dark ? `rgba(44,26,37,${strong ? 0.4 : 0.24})` : `rgba(255,255,255,${strong ? 0.38 : 0.2})`,
+    backgroundImage: `linear-gradient(170deg, rgba(255,255,255,${dark ? 0.07 : 0.32}), rgba(255,255,255,0) 40%)`,
     borderWidth: 1, borderColor: dark ? "rgba(255,255,255,0.13)" : "rgba(255,255,255,0.8)",
     boxShadow: `${shadow(c, level)}, inset 0px 1px 1px ${dark ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.95)"}, inset 0px -1px 2px rgba(255,255,255,${dark ? 0.04 : 0.4})`,
     // not in React Native's types; react-native-web passes it to CSS
-    ...({ backdropFilter: `blur(${strong ? 30 : 22}px) saturate(${dark ? 150 : 190}%)` } as object),
+    ...({ backdropFilter: `blur(${strong ? 26 : 20}px) saturate(${dark ? 160 : 200}%)` } as object),
   };
 };
 
 /** Fill of small controls (chips, pain tiles): white, or a thin film of glass on the web. */
-export const pane = (c: Palette) => webGlass ? (c.scheme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.45)") : c.surface;
+export const pane = (c: Palette) => webGlass ? (c.scheme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.25)") : c.surface;
 
 /** A card: opaque fill, a hairline edge and one soft shadow (Liquid Glass on the web). */
 export const raised = (c: Palette, level: 1 | 2 | 3 = 1, fill = c.surface): ViewStyle =>

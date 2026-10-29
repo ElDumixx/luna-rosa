@@ -46,8 +46,8 @@ export function Card({ children, style, delay, level = 1, tone = "default" }: {
     ...petal(L.radius + 14), backgroundColor: c.soft, borderColor: c.scheme === "dark" ? c.edge : "#F9D5E1",
     backgroundImage: `linear-gradient(160deg, ${c.aurora[0]}, ${c.soft} 55%, ${c.aurora[2]})`,
     // on the web the pastel wash is see-through, so the hero is tinted glass like the rest
-    ...(webGlass ? { backgroundColor: alpha(c.soft, 0.35), borderColor: c.scheme === "dark" ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.85)",
-      backgroundImage: `linear-gradient(160deg, ${alpha(c.aurora[0], 0.7)}, ${alpha(c.soft, 0.25)} 55%, ${alpha(c.aurora[2], 0.6)})` } : null),
+    ...(webGlass ? { backgroundColor: alpha(c.soft, 0.12), borderColor: c.scheme === "dark" ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.85)",
+      backgroundImage: `linear-gradient(160deg, ${alpha(c.aurora[0], 0.45)}, ${alpha(c.soft, 0.08)} 55%, ${alpha(c.aurora[2], 0.38)})` } : null),
   } : null;
   return (
     <Animated.View entering={delay != null ? enter(delay) : undefined} style={[base, hero, style]}>

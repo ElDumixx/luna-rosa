@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 import Animated, { cancelAnimation, Easing, useAnimatedProps, useAnimatedStyle, useReducedMotion, useSharedValue, withDelay, withRepeat, withSpring, withTiming } from "react-native-reanimated";
 import Svg, { Circle, G, Path } from "react-native-svg";
 import { PHASE_TEXT, PhaseId } from "../cycle";
-import { bloom, font, Palette, raised, tight, useTheme } from "../theme";
+import { alpha, bloom, font, Palette, raised, tight, useTheme, webGlass } from "../theme";
 
 const ACircle = Animated.createAnimatedComponent(Circle);
 
@@ -75,7 +75,7 @@ export const CycleOrb = memo(function CycleOrb({ day, len, dur, size = 220, lear
       </G>
       </Svg>
       </Animated.View>
-      <View style={{ width: inner, height: inner, borderRadius: inner / 2, alignItems: "center", justifyContent: "center", backgroundColor: c.soft }}>
+      <View style={{ width: inner, height: inner, borderRadius: inner / 2, alignItems: "center", justifyContent: "center", backgroundColor: webGlass ? alpha(c.soft, 0.3) : c.soft }}>
         {day ? (
           <>
             <Text maxFontSizeMultiplier={1.2} style={{ fontFamily: font.bold, fontSize: Math.max(12, size * 0.056), color: c.muted }}>Día</Text>
