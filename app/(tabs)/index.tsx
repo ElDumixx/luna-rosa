@@ -15,7 +15,7 @@ import { emptyDay, periodAt, setEnd, setStart, State } from "../../src/cycle";
 import { add, diff, DIA, fmt, MESL, today } from "../../src/dates";
 import { success } from "../../src/feedback";
 import { useStore } from "../../src/store";
-import { appear, font, Palette, petal, raised, tight, Tone, useLayout, useTheme } from "../../src/theme";
+import { appear, font, Palette, raised, tileRadius, tight, Tone, useLayout, useTheme } from "../../src/theme";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 
@@ -171,7 +171,7 @@ function Insight({ c, icon, tone, big, small, i, w, grow, row }: { c: Palette; i
   return (
     <Animated.View entering={appear(80 + i * 20)}
       style={[{ width: w, flexGrow: grow ? 1 : 0, padding: L.tablet ? 16 : 14, gap: row ? 12 : 10,
-        flexDirection: row ? "row" : "column", alignItems: row ? "center" : "stretch" }, raised(c, 1), petal(L.radius, 0.4)]}
+        flexDirection: row ? "row" : "column", alignItems: row ? "center" : "stretch" }, raised(c, 1), { borderRadius: tileRadius(L.radius) }]}
       accessible accessibilityLabel={`${small}: ${big === "—" ? "sin datos" : big}`}>
       <Badge icon={icon} tone={tone} size={L.fs(row ? 40 : 34)} />
       <View style={{ flexShrink: 1, gap: row ? 2 : 8 }}>

@@ -1,4 +1,4 @@
-// Shared building blocks of the "Pétalo" design: pressables, cards, petal badges, buttons, chips, pain picker, toast.
+// Shared building blocks of the "Pétalo" design: pressables, cards, round badges, buttons, chips, pain picker, toast.
 // Flat on purpose: plain fills and at most one shadow, and no animated colors, so long lists of chips stay light.
 // Life comes from small springs that only run when something changes (a press, a chosen chip).
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -7,7 +7,7 @@ import { Platform, Pressable, StyleProp, Text, TextInput, View, ViewStyle } from
 import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { PAIN } from "../content";
 import { select, tap } from "../feedback";
-import { alpha, bloom, disappear, enter, font, glossy, motion, painColor, Palette, pane, petal, raised, sunken, tight, Tone, useLayout, useTheme, webGlass } from "../theme";
+import { alpha, bloom, disappear, enter, font, glossy, motion, painColor, Palette, pane, raised, sunken, tight, Tone, useLayout, useTheme, webGlass } from "../theme";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 
@@ -33,7 +33,7 @@ export function Press({ onPress, onLongPress, style, children, accessibilityLabe
 export const Bouncy = Press;
 
 /**
- * Content card: an opaque white sheet with a hairline edge and a soft shadow. `hero` is the pastel petal
+ * Content card: an opaque white sheet with a hairline edge and a soft shadow. `hero` is the pastel card
  * at the top of a screen. Radius and padding follow the size class. `delay` fades it in when it first appears.
  */
 export function Card({ children, style, delay, level = 1, tone = "default" }: {
@@ -43,7 +43,7 @@ export function Card({ children, style, delay, level = 1, tone = "default" }: {
   const L = useLayout();
   const base: ViewStyle = { borderRadius: L.radius, padding: L.compact ? 15 : L.tablet ? 22 : 18, gap: L.compact ? 10 : 12, ...raised(c, level) };
   const hero: ViewStyle | null = tone === "hero" ? {
-    ...petal(L.radius + 14), backgroundColor: c.soft, borderColor: c.scheme === "dark" ? c.edge : "#F9D5E1",
+    borderRadius: L.radius + 6, backgroundColor: c.soft, borderColor: c.scheme === "dark" ? c.edge : "#F9D5E1",
     backgroundImage: `linear-gradient(160deg, ${c.aurora[0]}, ${c.soft} 55%, ${c.aurora[2]})`,
     // on the web the pastel wash is see-through, so the hero is tinted glass like the rest
     ...(webGlass ? { backgroundColor: alpha(c.soft, 0.12), borderColor: c.scheme === "dark" ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.85)",
@@ -62,11 +62,11 @@ export function Label({ children, color, fit }: { children: React.ReactNode; col
   return <Text numberOfLines={1} adjustsFontSizeToFit={fit} minimumFontScale={0.8} style={{ fontFamily: font.bold, fontSize: L.fs(11), letterSpacing: 1.2, textTransform: "uppercase", color: color ?? c.muted }}>{children}</Text>;
 }
 
-/** A petal-shaped tile in one of the pastel tints, with the icon in its deep shade. The mark at the start of each card. */
+/** A round badge in one of the pastel tints, with the icon in its deep shade. The mark at the start of each card. */
 export function Badge({ icon, size = 30, tone = "pink" }: { icon: IconName; size?: number; tone?: Tone }) {
   const c = useTheme();
   return (
-    <View style={{ width: size, height: size, ...petal(size * 0.5, 0.3), alignItems: "center", justifyContent: "center", backgroundColor: c.tint[tone] }}>
+    <View style={{ width: size, height: size, borderRadius: size / 2, alignItems: "center", justifyContent: "center", backgroundColor: c.tint[tone] }}>
       <Ionicons name={icon} size={size * 0.5} color={c.tintDeep[tone]} />
     </View>
   );
@@ -94,7 +94,7 @@ export function Btn({ label, onPress, variant = "primary", small, icon, disabled
   const c = useTheme();
   const L = useLayout();
   const v = ghost ? "soft" : variant;
-  const pad: ViewStyle = { paddingVertical: small ? 9 : L.tablet ? 16 : 14, paddingHorizontal: small ? (L.compact ? 12 : 15) : L.compact ? 14 : 22, minHeight: small ? 36 : 50, borderRadius: 999, alignItems: "center",
+  const pad: ViewStyle = { paddingVertical: small ? 9 : L.tablet ? 16 : 14, paddingHorizontal: small ? (L.compact ? 12 : 15) : full ? 12 : L.compact ? 14 : 22, minHeight: small ? 36 : 50, borderRadius: 999, alignItems: "center",
     justifyContent: "center", flexDirection: "row", gap: 7, alignSelf: full ? "stretch" : "auto" };
   const color = v === "primary" ? c.onAccent : v === "soft" ? c.accent : c.ink;
   const fill: ViewStyle = v === "primary" ? glossy(c, c.accent, small ? 1 : 2)
@@ -168,7 +168,7 @@ function Meter({ p, c }: { p: number; c: Palette }) {
   );
 }
 
-/** Four pain levels as petal tiles; the chosen one fills with pastel pink. */
+/** Four pain levels as rounded tiles; the chosen one fills with pastel pink. */
 export function PainPicker({ value, onPick }: { value: number | null; onPick: (v: number) => void }) {
   const c = useTheme();
   return (
@@ -178,7 +178,7 @@ export function PainPicker({ value, onPick }: { value: number | null; onPick: (v
         return (
           <View key={v} style={{ flex: 1 }}>
             <Press onPress={() => onPick(v)} selected={on} feedback="select" accessibilityLabel={`Dolor ${PAIN[v]}`}
-              style={{ ...petal(22, 0.4), paddingVertical: 13, alignItems: "center", gap: 7, borderWidth: 1.5,
+              style={{ borderRadius: 18, paddingVertical: 13, alignItems: "center", gap: 7, borderWidth: 1.5,
                 backgroundColor: on ? c.accentSoft : pane(c), borderColor: on ? c.pink : c.line }}>
               <Meter p={v} c={c} />
               <Text style={{ fontFamily: font.bold, fontSize: 13, color: on ? c.accent : c.ink }} numberOfLines={1} adjustsFontSizeToFit>{PAIN[v]}</Text>

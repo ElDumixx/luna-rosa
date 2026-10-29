@@ -1,4 +1,6 @@
-// "Pétalo" design system: flat pastel surfaces on a blush page, petal-shaped accents, a soft serif for titles.
+// "Pétalo" design system: flat pastel surfaces on a blush page, symmetric shapes, a soft serif for titles.
+// Shapes, one per role so they don't repeat: circles for small markers (icon badges, days), evenly rounded
+// rectangles for cards and tiles, pills for actions and choices (buttons, chips, the selected tab).
 // Pastel pink leads; peach, lilac and mint mark the cycle phases. Surfaces are opaque with one soft shadow:
 // no translucency, sheens or stacked shadows, which keeps every screen cheap to draw on both platforms.
 import { Platform, TextStyle, useColorScheme, useWindowDimensions, ViewStyle } from "react-native";
@@ -117,10 +119,8 @@ export const glossy = (c: Palette, color = c.accent, level: 1 | 2 = 2): ViewStyl
   backgroundColor: color, ...(level === 2 ? { boxShadow: `0px 8px 18px -10px ${alpha(color === c.accent && c.scheme === "dark" ? "#000000" : color, 0.7)}` } : null),
 });
 
-/** The petal: two opposite corners round, the other two tighter. The shape mark of the design. */
-export const petal = (r: number, k = 0.38): ViewStyle => ({
-  borderTopLeftRadius: r, borderBottomRightRadius: r, borderTopRightRadius: Math.round(r * k), borderBottomLeftRadius: Math.round(r * k),
-});
+/** Corner radius of tiles inside a card (and of small cards): a step below the card's own radius. */
+export const tileRadius = (cardRadius: number) => Math.max(14, cardRadius - 8);
 
 /** Android adds extra space above/below custom fonts; drop it so numbers and titles sit like on iOS. */
 export const tight: TextStyle = Platform.OS === "android" ? { includeFontPadding: false } : {};

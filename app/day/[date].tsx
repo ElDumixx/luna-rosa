@@ -10,7 +10,7 @@ import { DayLog, emptyDay, periodAt, removePeriod, setEnd, setStart, State } fro
 import { diff, fmt, fmtLong, today } from "../../src/dates";
 import { success } from "../../src/feedback";
 import { useStore } from "../../src/store";
-import { depth, font, petal, raised, sunken, tight, useLayout, useTheme } from "../../src/theme";
+import { depth, font, raised, sunken, tight, useLayout, useTheme } from "../../src/theme";
 
 type ListKey = "sym" | "mood" | "crave";
 
@@ -40,7 +40,7 @@ export default function Day() {
   const PeriodTile = ({ on, label, icon, onPress }: { on: boolean; label: string; icon: keyof typeof Ionicons.glyphMap; onPress: () => void }) => (
     <View style={{ flex: 1 }}>
       <Press onPress={onPress} selected={on} feedback="none" accessibilityLabel={`${label}${on ? ", marcado" : ""}`}
-        style={[{ paddingVertical: 16, alignItems: "center", gap: 6, borderWidth: 1.5 }, petal(24, 0.4),
+        style={[{ paddingVertical: 16, alignItems: "center", gap: 6, borderWidth: 1.5 }, { borderRadius: 20 },
           on ? { backgroundColor: c.period, borderColor: c.period } : { backgroundColor: c.surface, borderColor: c.line }]}>
         <Ionicons name={icon} size={22} color={on ? c.onPeriod : c.periodDeep} />
         <Text style={{ fontFamily: font.bold, fontSize: 15, color: on ? c.onPeriod : c.ink }}>{label}</Text>

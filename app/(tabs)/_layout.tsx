@@ -8,7 +8,7 @@ import { LayoutChangeEvent, Platform, Pressable, Text, View } from "react-native
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { select } from "../../src/feedback";
-import { alpha, bloom, font, petal, raised, useLayout, useTheme, webGlass } from "../../src/theme";
+import { alpha, bloom, font, raised, useLayout, useTheme, webGlass } from "../../src/theme";
 
 type Icon = keyof typeof Ionicons.glyphMap;
 const TABS: { name: string; title: string; sf: [string, string]; icon: [Icon, Icon] }[] = [
@@ -38,8 +38,8 @@ function FloatingBar({ state, navigateToTab }: BarProps) {
         style={[{ width: Math.min(L.width - (L.compact ? 20 : 28), L.tablet ? 560 : 460), height: barH, borderRadius: barH / 2, padding: 6, flexDirection: "row" },
           raised(c, 3, c.solid)]}>
         {w > 0 && (
-          // the selected tab sits on a pastel pink petal that slides between tabs
-          <Animated.View style={[{ position: "absolute", top: 6, left: 6, bottom: 6, width: itemW, backgroundColor: c.accentSoft }, petal(barH / 2 - 6, 0.45), pill]} />
+          // the selected tab sits on a pastel pink pill, centered on it, that slides between tabs
+          <Animated.View style={[{ position: "absolute", top: 6, left: 6, bottom: 6, width: itemW, borderRadius: (barH - 12) / 2, backgroundColor: c.accentSoft }, pill]} />
         )}
         {state.routes.map((r, i) => {
           const t = TABS.find((x) => x.name === r.name);

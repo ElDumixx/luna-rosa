@@ -31,7 +31,7 @@ const DayCell = memo(function DayCell({ k, c, cellH, dot, out, isToday, period: 
       style={({ pressed }) => ({ width: `${100 / 7}%`, height: cellH, alignItems: "center", justifyContent: "center",
         opacity: out ? 0.35 : pressed ? 0.6 : 1 })}>
       {p && (
-        // the period as one pastel band across its days, rounded at its ends like a petal
+        // the period as one pastel band across its days, rounded at both ends
         <View style={{ position: "absolute", top: "10%", bottom: "10%", left: isS ? "8%" : 0, right: isE ? "8%" : 0, backgroundColor: c.period,
           borderTopLeftRadius: isS ? 999 : 0, borderBottomLeftRadius: isS ? 999 : 0,
           borderTopRightRadius: isE ? 999 : 0, borderBottomRightRadius: isE ? 999 : 0 }} />

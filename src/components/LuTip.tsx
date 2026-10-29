@@ -6,7 +6,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { CycleInfo, PhaseId, phases } from "../cycle";
-import { alpha, font, pop, petal, raised, useLayout, useTheme, webGlass } from "../theme";
+import { alpha, font, pop, raised, useLayout, useTheme, webGlass } from "../theme";
 import { Lu } from "./Lu";
 import { Press } from "./ui";
 
@@ -29,7 +29,7 @@ export function LuTip({ ci, onPeriod, delay = 0 }: { ci: CycleInfo; onPeriod?: b
     <Animated.View entering={pop(delay)}>
       <Press onPress={() => router.navigate({ pathname: "/assistant", params: { q: tip.q } })} scaleTo={0.98}
         accessibilityLabel={`Lu: ${tip.line} Preguntar: ${tip.q}`}
-        style={[{ flexDirection: "row", alignItems: "center", gap: 12, padding: L.compact ? 12 : 14, paddingRight: 16 }, raised(c, 1), petal(L.radius, 0.35),
+        style={[{ flexDirection: "row", alignItems: "center", gap: 12, padding: L.compact ? 12 : 14, paddingRight: 16 }, raised(c, 1), { borderRadius: L.radius },
           { backgroundImage: `linear-gradient(120deg, ${alpha(c.pink, c.scheme === "dark" ? 0.16 : 0.32)}, ${webGlass ? "rgba(255,255,255,0)" : c.surface} 60%)` }]}>
         <View style={{ width: L.fs(58), height: L.fs(58), borderRadius: L.fs(29), alignItems: "center", justifyContent: "center", backgroundColor: c.tint.pink }}>
           <Lu size={L.fs(50)} />

@@ -6,7 +6,7 @@ import { hasLog, periodDays } from "../cycle";
 import { add, fmtLong, parse, today } from "../dates";
 import { tap } from "../feedback";
 import { useStore } from "../store";
-import { font, Palette, petal, tight, useLayout, useTheme } from "../theme";
+import { font, Palette, tight, useLayout, useTheme } from "../theme";
 import { Card, CardHead } from "./ui";
 
 const LETTER = ["D", "L", "M", "X", "J", "V", "S"];
@@ -21,8 +21,8 @@ const WeekDay = memo(function WeekDay({ k, c, isToday, period, pred, logged, dot
       android_ripple={{ color: c.accentSoft, borderless: true, radius: dot / 2 + 4 }}
       style={({ pressed }) => ({ flex: 1, alignItems: "center", gap: 6, opacity: pressed ? 0.6 : 1 })}>
       <Text style={{ fontFamily: font.bold, fontSize: 11, color: isToday ? c.accent : c.muted }}>{LETTER[d.getDay()]}</Text>
-      {/* each day is a petal-shaped pebble: pastel pink for the period, dashed for a predicted day, outlined for today */}
-      <View style={{ width: dot, height: dot, ...petal(dot * 0.42, 0.45), alignItems: "center", justifyContent: "center",
+      {/* each day is a round pebble: pastel pink for the period, dashed for a predicted day, outlined for today */}
+      <View style={{ width: dot, height: dot, borderRadius: dot / 2, alignItems: "center", justifyContent: "center",
         backgroundColor: period ? c.period : pred ? c.pred : c.soft,
         borderWidth: isToday ? 2.5 : pred && !period ? 1.5 : 0, borderColor: isToday ? c.accent : c.period, borderStyle: pred && !period && !isToday ? "dashed" : "solid" }}>
         <Text maxFontSizeMultiplier={1.2} style={[tight, { fontFamily: font.display, fontSize: dot * 0.4, color: period ? c.onPeriod : isToday ? c.accent : c.ink }]}>{d.getDate()}</Text>

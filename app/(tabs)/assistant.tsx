@@ -13,7 +13,7 @@ import { add, fmt, MESL, today } from "../../src/dates";
 import { select, success } from "../../src/feedback";
 import { LuAction, suggestions, think } from "../../src/lu/brain";
 import { useStore } from "../../src/store";
-import { webGlass, alpha, appear, bloom, depth, disappear, font, glossy, motion, Palette, petal, pop, raised, Tone, useLayout, useTheme } from "../../src/theme";
+import { webGlass, alpha, appear, bloom, depth, disappear, font, glossy, motion, Palette, pop, tileRadius, raised, Tone, useLayout, useTheme } from "../../src/theme";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 const ios = Platform.OS === "ios";
@@ -146,7 +146,7 @@ function Glow({ size, color }: { size: number; color: string }) {
     return () => cancelAnimation(b);
   }, [still]);
   const st = useAnimatedStyle(() => ({ transform: [{ scale: 0.96 + b.value * 0.08 }, { rotate: `${b.value * 8 - 4}deg` }] }));
-  return <Animated.View style={[{ position: "absolute", width: size, height: size, ...petal(size / 2, 0.45), backgroundColor: color }, st]} />;
+  return <Animated.View style={[{ position: "absolute", width: size, height: size, borderRadius: size / 2, backgroundColor: color }, st]} />;
 }
 
 /** Lu's answer: a full-width card (more room to read than a side bubble) signed with her face, name and time. */
@@ -154,7 +154,7 @@ function LuCard({ c, children, at, thinking, animate = true }: { c: Palette; chi
   const L = useLayout();
   return (
     <Animated.View entering={animate ? pop(0, "left") : undefined} style={[{ alignSelf: "stretch", padding: L.compact ? 14 : 16, gap: 10 },
-      raised(c, 1, c.solid), petal(L.radius - 4, 0.3)]}>
+      raised(c, 1, c.solid), { borderRadius: tileRadius(L.radius) }]}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
         <View style={{ width: 26, height: 26, borderRadius: 13, alignItems: "center", justifyContent: "center", backgroundColor: c.tint.pink }}>
           <Lu size={22} still={!thinking} thinking={thinking} />
@@ -390,7 +390,7 @@ export default function Assistant() {
                   {sugg.map((s, i) => (
                     <Animated.View key={s} entering={pop(240 + i * 80)} style={{ width: L.wide ? "23%" : "47%", flexGrow: L.wide ? 0 : 1 }}>
                       <Press onPress={() => send(s)} accessibilityLabel={s}
-                        style={[{ padding: 14, gap: 10, minHeight: L.fs(108), justifyContent: "space-between" }, raised(c, 1), petal(24, 0.4)]}>
+                        style={[{ padding: 14, gap: 10, minHeight: L.fs(108), justifyContent: "space-between" }, raised(c, 1), { borderRadius: tileRadius(L.radius) }]}>
                         <Badge icon={iconFor(s)} size={L.fs(34)} tone={(["pink", "lilac", "peach", "mint"] as Tone[])[i % 4]} />
                         <Text style={{ fontFamily: font.bold, fontSize: L.fs(14), lineHeight: L.fs(19), color: c.ink }}>{s}</Text>
                       </Press>
