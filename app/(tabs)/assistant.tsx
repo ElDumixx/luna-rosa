@@ -13,7 +13,7 @@ import { add, fmt, MESL, today } from "../../src/dates";
 import { select, success } from "../../src/feedback";
 import { LuAction, suggestions, think } from "../../src/lu/brain";
 import { useStore } from "../../src/store";
-import { alpha, appear, bloom, depth, disappear, font, glossy, motion, Palette, petal, pop, raised, Tone, useLayout, useTheme } from "../../src/theme";
+import { webGlass, alpha, appear, bloom, depth, disappear, font, glossy, motion, Palette, petal, pop, raised, Tone, useLayout, useTheme } from "../../src/theme";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 const ios = Platform.OS === "ios";
@@ -443,7 +443,7 @@ export default function Assistant() {
         {/* header floats over the conversation; what scrolls under it fades out instead of being cut */}
         <View pointerEvents="box-none" onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}
           style={{ position: "absolute", top: 0, left: 0, right: 0, paddingTop: ins.top + 6, paddingBottom: 16, paddingHorizontal: L.pad, alignItems: "center",
-            backgroundImage: `linear-gradient(180deg, ${alpha(c.bg, 0.96)} 55%, ${alpha(c.bg, 0)})` }}>
+            backgroundImage: `linear-gradient(180deg, ${alpha(c.bg, webGlass ? 0.55 : 0.96)} 40%, ${alpha(c.bg, 0)})` }}>
           <Glass strong style={{ width: "100%", maxWidth: chatMax, borderRadius: 28, paddingVertical: 10, paddingHorizontal: 12, flexDirection: "row", alignItems: "center", gap: 12 }}>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Halo on={busy} size={46} color={c.pink} />

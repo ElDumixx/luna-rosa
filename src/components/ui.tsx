@@ -7,7 +7,7 @@ import { Platform, Pressable, StyleProp, Text, TextInput, View, ViewStyle } from
 import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { PAIN } from "../content";
 import { select, tap } from "../feedback";
-import { bloom, disappear, enter, font, glossy, motion, painColor, Palette, petal, raised, sunken, tight, Tone, useLayout, useTheme } from "../theme";
+import { alpha, bloom, disappear, enter, font, glossy, motion, painColor, Palette, pane, petal, raised, sunken, tight, Tone, useLayout, useTheme, webGlass } from "../theme";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 
@@ -45,6 +45,9 @@ export function Card({ children, style, delay, level = 1, tone = "default" }: {
   const hero: ViewStyle | null = tone === "hero" ? {
     ...petal(L.radius + 14), backgroundColor: c.soft, borderColor: c.scheme === "dark" ? c.edge : "#F9D5E1",
     backgroundImage: `linear-gradient(160deg, ${c.aurora[0]}, ${c.soft} 55%, ${c.aurora[2]})`,
+    // on the web the pastel wash is see-through, so the hero is tinted glass like the rest
+    ...(webGlass ? { backgroundColor: alpha(c.soft, 0.35), borderColor: c.scheme === "dark" ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.85)",
+      backgroundImage: `linear-gradient(160deg, ${alpha(c.aurora[0], 0.7)}, ${alpha(c.soft, 0.25)} 55%, ${alpha(c.aurora[2], 0.6)})` } : null),
   } : null;
   return (
     <Animated.View entering={delay != null ? enter(delay) : undefined} style={[base, hero, style]}>
@@ -96,7 +99,7 @@ export function Btn({ label, onPress, variant = "primary", small, icon, disabled
   const color = v === "primary" ? c.onAccent : v === "soft" ? c.accent : c.ink;
   const fill: ViewStyle = v === "primary" ? glossy(c, c.accent, small ? 1 : 2)
     : v === "soft" ? { backgroundColor: c.accentSoft }
-    : { backgroundColor: c.surface, borderWidth: 1, borderColor: c.line };
+    : { backgroundColor: pane(c), borderWidth: 1, borderColor: c.line };
   return (
     <Press onPress={onPress} disabled={disabled} style={[pad, fill]}>
       {icon && <Ionicons name={icon} size={small ? 15 : 18} color={color} />}
@@ -126,7 +129,7 @@ export const Chip = memo(function Chip({ label, on, onPress, icon }: { label: st
   return (
     <Pressable onPress={() => { select(); onPress(); }} hitSlop={4} accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ selected: on }}
       style={({ pressed }) => ({ borderRadius: 999, paddingVertical: 9, paddingHorizontal: 14, borderWidth: 1.5, flexDirection: "row", gap: 6, alignItems: "center",
-        backgroundColor: on ? c.accentSoft : c.surface, borderColor: on ? c.pink : c.line, opacity: pressed ? 0.7 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] })}>
+        backgroundColor: on ? c.accentSoft : pane(c), borderColor: on ? c.pink : c.line, opacity: pressed ? 0.7 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] })}>
       {on ? <Animated.View key="on" entering={bloom()}><Ionicons name="checkmark" size={15} color={c.accent} /></Animated.View>
         : icon ? <Ionicons name={icon} size={15} color={c.accent} /> : null}
       <Text style={{ fontFamily: font.bold, fontSize: 14, color: on ? c.accent : c.ink }}>{label}</Text>
@@ -176,7 +179,7 @@ export function PainPicker({ value, onPick }: { value: number | null; onPick: (v
           <View key={v} style={{ flex: 1 }}>
             <Press onPress={() => onPick(v)} selected={on} feedback="select" accessibilityLabel={`Dolor ${PAIN[v]}`}
               style={{ ...petal(22, 0.4), paddingVertical: 13, alignItems: "center", gap: 7, borderWidth: 1.5,
-                backgroundColor: on ? c.accentSoft : c.surface, borderColor: on ? c.pink : c.line }}>
+                backgroundColor: on ? c.accentSoft : pane(c), borderColor: on ? c.pink : c.line }}>
               <Meter p={v} c={c} />
               <Text style={{ fontFamily: font.bold, fontSize: 13, color: on ? c.accent : c.ink }} numberOfLines={1} adjustsFontSizeToFit>{PAIN[v]}</Text>
             </Press>

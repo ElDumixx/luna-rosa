@@ -8,7 +8,7 @@ import { LayoutChangeEvent, Platform, Pressable, Text, View } from "react-native
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { select } from "../../src/feedback";
-import { alpha, bloom, font, petal, raised, useLayout, useTheme } from "../../src/theme";
+import { alpha, bloom, font, petal, raised, useLayout, useTheme, webGlass } from "../../src/theme";
 
 type Icon = keyof typeof Ionicons.glyphMap;
 const TABS: { name: string; title: string; sf: [string, string]; icon: [Icon, Icon] }[] = [
@@ -32,7 +32,7 @@ function FloatingBar({ state, navigateToTab }: BarProps) {
     <>
     {/* content scrolling under the bar fades into the page instead of showing through behind it */}
     <View pointerEvents="none" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: barH + Math.max(ins.bottom, 10) + 36,
-      backgroundImage: `linear-gradient(180deg, ${alpha(c.bg, 0)}, ${alpha(c.bg, 0.92)} 65%)` }} />
+      backgroundImage: `linear-gradient(180deg, ${alpha(c.bg, 0)}, ${alpha(c.bg, webGlass ? 0.45 : 0.92)} 65%)` }} />
     <View pointerEvents="box-none" style={{ position: "absolute", left: 0, right: 0, bottom: L.short ? 6 : Math.max(ins.bottom, 10) + 4, alignItems: "center" }}>
       <View onLayout={(e: LayoutChangeEvent) => setW(e.nativeEvent.layout.width - 12)}
         style={[{ width: Math.min(L.width - (L.compact ? 20 : 28), L.tablet ? 560 : 460), height: barH, borderRadius: barH / 2, padding: 6, flexDirection: "row" },
